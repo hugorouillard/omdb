@@ -123,8 +123,17 @@
                         <a class="topBarUsername hideOnMobile" href="/profile/<?php echo $userId; ?>" style="color: var(--main-theme-text-color);"><b><?php echo $userName; ?></b></a>
 				<?php
                     } else {
+                        $debugEnabled = filter_var($env['DEBUG'] ?? false, FILTER_VALIDATE_BOOLEAN);
+                        $publicHost = parse_url($env['PUBLIC_URL'] ?? '', PHP_URL_HOST);
+                        $useDevelopmentLogin = $debugEnabled
+                            && $env['DATABASE_HOST'] === 'db'
+                            && in_array($publicHost, ['localhost', '127.0.0.1'], true)
+                            && !empty($env['DEVELOPMENT_SESSION_TOKEN']);
+                        $loginUrl = $useDevelopmentLogin
+                            ? '/dev-login.php?redirect=' . urlencode($_SERVER['REQUEST_URI'])
+                            : FetchOsuOauthLink($env['OSU_CLIENT_ID'], $_SERVER['REQUEST_URI']);
                 ?>
-					<b style="margin-left:1em"><a href=<?php echo FetchOsuOauthLink($env['OSU_CLIENT_ID'], $_SERVER["REQUEST_URI"]); ?>>log in</a></b>
+					<b style="margin-left:1em"><a href="<?php echo safe_htmlspecialchars($loginUrl, ENT_QUOTES); ?>">log in</a></b>
 				<?php
                     }
                 ?>
