@@ -470,8 +470,392 @@ input[type="checkbox"].hamburgerToggle {
 }
 
 .mapset-cover {
-  width: 25rem;
-  height: 8.5em;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mapset-title {
+  margin: 0 0 1rem;
+  text-align: center;
+}
+
+.mapset-overview {
+  display: grid;
+  grid-template-columns: minmax(16rem, 25rem) minmax(0, 1fr);
+  gap: 0.5rem;
+  align-items: stretch;
+}
+
+.mapset-cover-container {
+  min-height: 8.5em;
+  overflow: hidden;
+  background: var(--main-theme-color-darker);
+}
+
+.mapset-overview-card,
+.mapset-discovery-panel,
+.mapset-detail-card {
+  min-width: 0;
+  background: var(--main-theme-color);
+}
+
+.mapset-panel-heading {
+  padding: 0.35rem 0.5rem;
+  background: var(--main-theme-color-darker);
+  font-weight: bold;
+}
+
+.mapset-overview-content {
+  display: flex;
+  min-height: calc(100% - 2rem);
+}
+
+.mapset-facts,
+.mapset-overview-credits {
+  flex: 1 1 50%;
+  min-width: 0;
+  padding: 0.75rem;
+  box-sizing: border-box;
+}
+
+.mapset-rating-context {
+  color: #c8c8c8;
+  font-size: 12px;
+}
+
+.mapset-overview-credits {
+  border-left: 2px solid var(--main-theme-color-darker);
+}
+
+.mapset-credit-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.mapset-credit {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.mapset-credit img,
+.mapset-inline-user img {
+  width: 1.75rem;
+  height: 1.75rem;
+  flex: 0 0 auto;
+}
+
+.mapset-credit .subText {
+  display: block;
+}
+
+.mapset-credit-overflow {
+  grid-column: 1 / -1;
+}
+
+.mapset-credit-overflow > summary {
+  color: var(--main-theme-link-color);
+}
+
+.mapset-section {
+  margin-top: 2rem;
+}
+
+.mapset-section-title {
+  margin: 0 0 0.6rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid var(--main-theme-text-color);
+  font-size: 1.25rem;
+}
+
+.mapset-primary-layout {
+  display: grid;
+  grid-template-columns: minmax(28rem, 3fr) minmax(19rem, 2fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+.mapset-subsection-title {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+}
+
+.mapset-difficulty-columns,
+.difficulty-container {
+  display: grid;
+  grid-template-columns:
+    minmax(9rem, 1.15fr)
+    minmax(5.5rem, 0.7fr)
+    minmax(9.5rem, 1.25fr)
+    minmax(6.5rem, 0.8fr);
+  column-gap: 0.75rem;
+}
+
+.mapset-difficulty-columns {
+  padding: 0.2rem 0.75rem;
+  color: var(--main-theme-subtext-color);
+  font-size: 11px;
+}
+
+.mapset-difficulty-columns span:nth-child(3) {
+  text-align: right;
+}
+
+.difficulty-container {
+  position: relative;
+  min-height: 5.5em;
+  padding: 0.75rem;
+  row-gap: 0.75rem;
+  align-items: start;
+  box-sizing: border-box;
+}
+
+.difficulty-container > div {
+  height: auto;
+  min-width: 0;
+}
+
+.difficulty-container > .diffBox {
+  width: auto !important;
+  margin: 0;
+  align-self: center;
+}
+
+.mapset-difficulty-summary {
+  grid-column: 1;
+  grid-row: 1;
+  text-align: left !important;
+}
+
+.mapset-difficulty-distribution {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.mapset-difficulty-community {
+  grid-column: 3;
+  grid-row: 1;
+  text-align: right !important;
+}
+
+.mapset-user-rating {
+  grid-column: 4;
+  grid-row: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  position: relative;
+  padding-right: 1.75rem;
+}
+
+.mapset-user-rating > div {
+  flex-basis: 100%;
+}
+
+.mapset-rating-label {
+  display: block;
+  flex-basis: 100%;
+  margin-bottom: 0.25rem;
+  color: var(--main-theme-subtext-color);
+  font-size: 11px;
+}
+
+.difficulty-container .tag-button {
+  position: absolute;
+  top: 50%;
+  right: 0.5rem;
+  width: 1.75rem;
+  min-width: 1.75rem;
+  height: 2rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  transform: translateY(-50%);
+}
+
+.mapset-tag-editor {
+  position: absolute;
+  top: calc(50% + 1rem);
+  right: 0.75rem;
+  z-index: 10;
+  width: 0;
+  height: 0;
+  padding: 0;
+}
+
+.mapset-tag-editor .tag-input {
+  top: 0;
+  right: 0;
+  bottom: auto !important;
+  left: auto !important;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.45);
+}
+
+.mapset-tournament-indicator {
+  position: absolute !important;
+  top: 50%;
+  left: -2rem;
+  z-index: 2;
+}
+
+.mapset-community-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    "ratings"
+    "comments";
+  gap: 1rem;
+  align-items: start;
+}
+
+.mapset-community {
+  position: sticky;
+  top: 5rem;
+  max-height: calc(100vh - 6rem);
+  padding-right: 0.25rem;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+}
+
+.mapset-comments,
+.mapset-latest-ratings,
+.mapset-reviews {
+  min-width: 0;
+}
+
+.mapset-comments {
+  grid-area: comments;
+}
+
+.mapset-latest-ratings {
+  grid-area: ratings;
+}
+
+.mapset-latest-ratings #setRatingsDisplay {
+  max-height: 22rem;
+  overflow-y: auto;
+}
+
+.mapset-comment-list {
+  max-height: 22rem;
+  overflow-y: auto;
+}
+
+.mapset-empty-state {
+  padding: 1rem;
+  background: var(--main-theme-color);
+  color: var(--main-theme-subtext-color);
+  text-align: center;
+  font-style: italic;
+}
+
+.mapset-discovery-panel + .mapset-discovery-panel {
+  margin-top: 1rem;
+}
+
+.mapset-discovery-panel > .mapset-subsection-title,
+.mapset-detail-card > .mapset-subsection-title {
+  padding: 0.5rem;
+  margin: 0;
+  background: var(--main-theme-color-darker);
+}
+
+.mapset-help-icon {
+  display: inline-flex;
+  width: 1rem;
+  height: 1rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--main-theme-subtext-color);
+  border-radius: 50%;
+  color: var(--main-theme-subtext-color);
+  font-size: 0.7em;
+}
+
+.mapset-related-maps {
+  width: 100%;
+  padding: 0;
+  overflow-x: auto;
+  justify-content: flex-start;
+  scroll-snap-type: x proximity;
+  background: var(--main-theme-color);
+}
+
+.mapset-related-maps .map-card {
+  flex: 0 0 11rem;
+  scroll-snap-align: start;
+}
+
+.mapset-list-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1px;
+  background: var(--main-theme-color-darker);
+}
+
+.mapset-list-card {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  min-width: 0;
+  padding: 0.6rem;
+  background: var(--main-theme-color);
+}
+
+.mapset-list-card img {
+  width: 3rem;
+  height: 3rem;
+}
+
+.mapset-list-card > div {
+  min-width: 0;
+}
+
+.mapset-list-card .subText {
+  display: block;
+}
+
+.mapset-details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  gap: 1rem;
+}
+
+.mapset-detail-card {
+  padding-bottom: 0.75rem;
+}
+
+.mapset-nominator-list,
+.mapset-detail-card > a,
+.mapset-detail-card > .mapset-empty-state,
+.mapset-contributors {
+  margin: 0.75rem;
+}
+
+.mapset-nominator-row {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.mapset-nominator-row + .mapset-nominator-row {
+  margin-top: 0.5rem;
+}
+
+.mapset-mode-icon {
+  flex: 0 0 auto;
+}
+
+.mapset-inline-user {
+  display: inline-flex;
+  gap: 0.35rem;
+  align-items: center;
+  margin: 0.2rem 0.75rem 0.2rem 0;
 }
 
 
@@ -640,15 +1024,14 @@ button.blocked:hover {
 }
 
 .difficulty-container {
+  display: grid;
   background-color: var(--main-theme-color);
-  justify-content: space-between;
   align-items: center;
   min-height: 5.5em;
 }
 
 .difficulty-container > div {
-  flex-grow: 1;
-  height: 100%;
+  height: auto;
 }
 
 .mapsetRankingDistribution {
@@ -1144,6 +1527,29 @@ input[type="checkbox"]:disabled {
   font-weight: 750;
 }
 
+@media only screen and (max-width: 1250px) {
+  .mapset-primary-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .mapset-community {
+    grid-row: 1;
+    position: static;
+    max-height: none;
+    padding-right: 0;
+    overflow-y: visible;
+  }
+
+  .mapset-difficulties {
+    grid-row: 2;
+  }
+
+  .mapset-community-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas: "ratings comments";
+  }
+}
+
 @media only screen and (max-width: 1050px) {
   body {
     overflow-x: clip;
@@ -1164,7 +1570,29 @@ input[type="checkbox"]:disabled {
 
   .mapset-cover {
     width: 100%;
-    height: auto;
+    height: 100%;
+  }
+
+  .mapset-overview {
+    grid-template-columns: minmax(14rem, 2fr) minmax(0, 3fr);
+  }
+
+  .mapset-overview-content {
+    flex-direction: column;
+  }
+
+  .mapset-overview-credits {
+    border-top: 2px solid var(--main-theme-color-darker);
+    border-left: 0;
+  }
+
+  .mapset-difficulty-columns {
+    display: grid;
+  }
+
+  .mapset-community-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas: "ratings comments";
   }
 
   .content {
@@ -1333,6 +1761,10 @@ input[type="checkbox"]:disabled {
     scroll-snap-align: start;
   }
 
+  .mapset-related-maps .map-card {
+    flex: 0 0 25%;
+  }
+
   .flex-container > .flex-child {
     min-width: 0;
   }
@@ -1407,13 +1839,45 @@ input[type="checkbox"]:disabled {
   }
 
   .difficulty-container {
-    flex-wrap: wrap;
+    grid-template-columns:
+      minmax(9rem, 1.15fr)
+      minmax(5.5rem, 0.7fr)
+      minmax(9.5rem, 1.25fr)
+      minmax(6.5rem, 0.8fr);
+    row-gap: 0.75rem;
+    align-items: start;
   }
 
   .difficulty-container > .diffBox {
     width: auto !important;
-    flex: 1 1 100%;
-    text-align: left !important;
+  }
+
+  .mapset-difficulty-summary {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .mapset-difficulty-distribution {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .mapset-difficulty-community {
+    grid-column: 3;
+    grid-row: 1;
+  }
+
+  .mapset-user-rating {
+    grid-column: 4;
+    grid-row: 1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .mapset-rating-label {
+    display: block;
+    flex-basis: 100%;
   }
 
   .difficulty-container > .diffBox:empty {
@@ -1433,19 +1897,11 @@ input[type="checkbox"]:disabled {
     display: none;
   }
 
-  .difficulty-container > .diffBox:has(> .star-rating-list-mobile) {
-    flex: 1 1 0;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-  }
-
-  .difficulty-container > .diffBox:has(> .star-rating-list-mobile) > div {
-    flex: 1 1 100%;
+  .mapset-user-rating > div {
+    flex-basis: 100%;
   }
 
   .difficulty-container .tag-button {
-    align-self: center;
     padding-right: 0 !important;
   }
 
@@ -1550,6 +2006,70 @@ input[type="checkbox"]:disabled {
 
   .map-card {
     flex: 0 0 35%;
+  }
+
+  .mapset-overview {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .mapset-community-grid {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+  }
+
+  .mapset-difficulty-columns {
+    display: none;
+  }
+
+  .mapset-comments,
+  .mapset-latest-ratings {
+    flex: 0 0 88%;
+    max-height: 18rem;
+    overflow-y: auto;
+    scroll-snap-align: start;
+  }
+
+  .mapset-latest-ratings {
+    order: -1;
+  }
+
+  .mapset-cover {
+    height: auto;
+  }
+
+  .mapset-cover-container {
+    min-height: 0;
+  }
+
+  .difficulty-container {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .mapset-difficulty-summary {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .mapset-difficulty-community {
+    grid-column: 1;
+    grid-row: 2;
+    text-align: left !important;
+  }
+
+  .mapset-difficulty-distribution {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .mapset-user-rating {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .mapset-related-maps .map-card {
+    flex: 0 0 55%;
   }
 
   .friend-box {

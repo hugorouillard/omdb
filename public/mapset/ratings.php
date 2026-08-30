@@ -94,6 +94,10 @@
     $stmt->execute();
     $result = $stmt->get_result();
 
+    if ($result->num_rows === 0) {
+        echo '<div class="mapset-empty-state">No ratings found.</div>';
+    }
+
     while ($row = $result->fetch_assoc()) {
         $isPrivate = $row["IsPrivate"] && $row["UserID"] != $userId;
 
