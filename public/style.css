@@ -703,16 +703,6 @@ input[type="checkbox"].hamburgerToggle {
   z-index: 2;
 }
 
-.mapset-community-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  grid-template-areas:
-    "ratings"
-    "comments";
-  gap: 1rem;
-  align-items: start;
-}
-
 .mapset-community {
   position: sticky;
   top: 5rem;
@@ -728,22 +718,32 @@ input[type="checkbox"].hamburgerToggle {
   min-width: 0;
 }
 
-.mapset-comments {
-  grid-area: comments;
-}
-
-.mapset-latest-ratings {
-  grid-area: ratings;
-}
-
 .mapset-latest-ratings #setRatingsDisplay {
-  max-height: 22rem;
+  max-height: calc(100vh - 10rem);
   overflow-y: auto;
 }
 
 .mapset-comment-list {
   max-height: 22rem;
   overflow-y: auto;
+}
+
+.mapset-discussion-tabs {
+  display: flex;
+}
+
+.mapset-discussion-tabs button {
+  min-width: 9rem;
+}
+
+.mapset-discussion-panel {
+  padding-top: 1rem;
+}
+
+.mapset-discussion-panel[hidden],
+.mapset-discussion-panel .mapset-subsection-title,
+.mapset-discussion-panel .mapset-section-title {
+  display: none;
 }
 
 .mapset-empty-state {
@@ -1544,10 +1544,10 @@ input[type="checkbox"]:disabled {
     grid-row: 2;
   }
 
-  .mapset-community-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-template-areas: "ratings comments";
+  .mapset-latest-ratings #setRatingsDisplay {
+    max-height: 22rem;
   }
+
 }
 
 @media only screen and (max-width: 1050px) {
@@ -1588,11 +1588,6 @@ input[type="checkbox"]:disabled {
 
   .mapset-difficulty-columns {
     display: grid;
-  }
-
-  .mapset-community-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-template-areas: "ratings comments";
   }
 
   .content {
@@ -2012,27 +2007,12 @@ input[type="checkbox"]:disabled {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .mapset-community-grid {
-    display: flex;
-    gap: 1rem;
-    overflow-x: auto;
-    scroll-snap-type: x proximity;
-  }
-
   .mapset-difficulty-columns {
     display: none;
   }
 
-  .mapset-comments,
-  .mapset-latest-ratings {
-    flex: 0 0 88%;
+  .mapset-latest-ratings #setRatingsDisplay {
     max-height: 18rem;
-    overflow-y: auto;
-    scroll-snap-align: start;
-  }
-
-  .mapset-latest-ratings {
-    order: -1;
   }
 
   .mapset-cover {

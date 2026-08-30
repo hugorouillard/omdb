@@ -640,9 +640,25 @@ while ($row = $result->fetch_assoc()) {
 </script>
 </section>
 
-<section class="mapset-section mapset-community" aria-labelledby="community-heading">
-    <h2 id="community-heading" class="mapset-section-title">Community</h2>
-    <div class="mapset-community-grid">
+<aside class="mapset-section mapset-community" aria-labelledby="latest-ratings-heading">
+    <h2 id="latest-ratings-heading" class="mapset-section-title">Latest Ratings</h2>
+    <div class="mapset-latest-ratings">
+        <div id="setRatingsDisplay">
+            <?php
+            require 'ratings.php';
+            ?>
+        </div>
+    </div>
+</aside>
+</div>
+
+<section class="mapset-section mapset-discussion" aria-labelledby="discussion-heading">
+    <h2 id="discussion-heading" class="mapset-section-title">Discussion</h2>
+    <div class="tabbed-container-nav mapset-discussion-tabs" role="tablist" aria-label="Mapset discussion">
+        <button type="button" id="comments-tab" class="active" role="tab" aria-selected="true" aria-controls="comments-panel">Comments (<?php echo $commentCount; ?>)</button>
+        <button type="button" id="reviews-tab" role="tab" aria-selected="false" aria-controls="reviews-panel" tabindex="-1">Reviews</button>
+    </div>
+    <div id="comments-panel" class="mapset-discussion-panel" role="tabpanel" aria-labelledby="comments-tab">
         <div class="mapset-comments">
         <?php if ($sampleRow['CreatorID'] !== 7960151) { ?>
         <h3 class="mapset-subsection-title">Comments (<?php echo $commentCount; ?>)</h3>
@@ -777,20 +793,9 @@ while ($row = $result->fetch_assoc()) {
         </div>
         <?php } ?>
         </div>
-    <div class="mapset-latest-ratings">
-        <h3 class="mapset-subsection-title">Latest Ratings</h3>
-        <div id="setRatingsDisplay">
-            <?php
-            require 'ratings.php';
-            ?>
-        </div>
     </div>
-</div>
-</section>
-</div>
-
-<section class="mapset-section mapset-reviews-section" aria-label="Reviews">
-	<div class="mapset-reviews">
+    <div id="reviews-panel" class="mapset-discussion-panel" role="tabpanel" aria-labelledby="reviews-tab" hidden>
+	    <div class="mapset-reviews">
         <?php if ($sampleRow['CreatorID'] !== 7960151) { ?>
 
 		<h3 class="mapset-section-title">Reviews</h3>
@@ -978,8 +983,42 @@ while ($row = $result->fetch_assoc()) {
         ?>
 
         <?php } ?>
-	</div>
+	    </div>
+    </div>
 </section>
+
+<script>
+    const discussionTabs = document.querySelectorAll('.mapset-discussion-tabs [role="tab"]');
+    const discussionPanels = document.querySelectorAll('.mapset-discussion-panel');
+
+    discussionTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            discussionTabs.forEach(otherTab => {
+                const isActive = otherTab === tab;
+                otherTab.classList.toggle('active', isActive);
+                otherTab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+                otherTab.tabIndex = isActive ? 0 : -1;
+            });
+
+            discussionPanels.forEach(panel => {
+                panel.hidden = panel.id !== tab.getAttribute('aria-controls');
+            });
+        });
+
+        tab.addEventListener('keydown', event => {
+            if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') {
+                return;
+            }
+
+            event.preventDefault();
+            const currentIndex = Array.from(discussionTabs).indexOf(tab);
+            const direction = event.key === 'ArrowRight' ? 1 : -1;
+            const nextIndex = (currentIndex + direction + discussionTabs.length) % discussionTabs.length;
+            discussionTabs[nextIndex].click();
+            discussionTabs[nextIndex].focus();
+        });
+    });
+</script>
 
 <?php
     $similarMaps = GetSimilarBeatmaps($conn, $mapset_id, 8, $similarMapsSeed);
