@@ -154,9 +154,9 @@ GROUP BY
         <img src="https://assets.ppy.sh/beatmaps/<?php echo $sampleRow['SetID']; ?>/covers/cover.jpg" class="mapset-cover" alt="" onerror="this.onerror=null; this.src='../assets/img/missing-map-banner.png';" />
     </div>
     <div class="mapset-overview-card">
-        <div class="mapset-panel-heading">Mapset info</div>
         <div class="mapset-overview-content">
             <div class="mapset-facts">
+                <div class="mapset-panel-heading">Mapset info</div>
                 <?php
                 if ($isLoved) {
                     echo "Submitted: ";
@@ -192,7 +192,7 @@ GROUP BY
             </div>
             <?php if ($credits) { ?>
                 <div class="mapset-overview-credits">
-                    <strong>Credits</strong>
+                    <div class="mapset-panel-heading">Credits</div>
                     <div class="mapset-credit-list">
                         <?php foreach (array_slice($credits, 0, 6) as $credit) {
                             $escapedCreditName = safe_htmlspecialchars($credit['Username'] ?? GetUserNameFromId($credit['UserID'], $conn), ENT_QUOTES);
@@ -222,8 +222,42 @@ GROUP BY
                     </div>
                 </div>
             <?php } elseif ($sampleRow["CreatorID"] == $userId) { ?>
-                <div class="mapset-overview-credits mapset-empty-state">
-                    No credits added. <a href="edit/?id=<?php echo $mapset_id; ?>">Add credits</a>
+                <div class="mapset-overview-credits">
+                    <div class="mapset-panel-heading">Credits</div>
+                    <div class="mapset-empty-state">
+                        No credits added. <a href="edit/?id=<?php echo $mapset_id; ?>">Add credits</a>
+                    </div>
+                </div>
+            <?php } ?>
+            <?php if (!empty($nominators) || (!$isLoved && !$isGraveyarded)) { ?>
+                <div class="mapset-overview-nominators">
+                    <div class="mapset-panel-heading">Nominators</div>
+                    <?php if ($nominators) { ?>
+                        <div class="mapset-nominator-list">
+                            <?php foreach ($nominators as $mode => $modeNominators) { ?>
+                                <div class="mapset-nominator-row">
+                                    <span class="mapset-mode-icon"><?php echo getModeIcon((int)$mode); ?></span>
+                                    <span>
+                                        <?php foreach ($modeNominators as $nominatorID => $nominatorName) {
+                                            $escapedNominatorName = safe_htmlspecialchars($nominatorName, ENT_QUOTES);
+                                            ?>
+                                            <a class="mapset-inline-user" href="/profile/<?php echo $nominatorID; ?>">
+                                                <img class="square-thumb" src="https://s.ppy.sh/a/<?php echo $nominatorID; ?>" alt="" />
+                                                <?php echo $escapedNominatorName; ?>
+                                            </a>
+                                        <?php } ?>
+                                    </span>
+                                </div>
+                            <?php } ?>
+                        </div>
+                    <?php } else { ?>
+                        <div class="mapset-empty-state">
+                            No nomination data is available for this set.
+                            <?php if ($loggedIn) { ?>
+                                <a href="edit/?id=<?php echo $mapset_id; ?>">Help identify the nominators</a>.
+                            <?php } ?>
+                        </div>
+                    <?php } ?>
                 </div>
             <?php } ?>
         </div>
@@ -1111,66 +1145,31 @@ while ($row = $result->fetch_assoc()) {
 </section>
 
 <?php
-    $showNominatorDetails = !empty($nominators) || (!$isLoved && !$isGraveyarded);
     $showEditDetails = $loggedIn || !empty($contributors);
-    if ($showNominatorDetails || $showEditDetails) {
+    if ($showEditDetails) {
 ?>
 <section class="mapset-section mapset-details" aria-labelledby="details-heading">
     <h2 id="details-heading" class="mapset-section-title">Details</h2>
     <div class="mapset-details-grid">
-        <?php if ($showNominatorDetails) { ?>
-            <div class="mapset-detail-card">
-                <h3 class="mapset-subsection-title">Nominators</h3>
-                <?php if ($nominators) { ?>
-                    <div class="mapset-nominator-list">
-                        <?php foreach ($nominators as $mode => $modeNominators) { ?>
-                            <div class="mapset-nominator-row">
-                                <span class="mapset-mode-icon"><?php echo getModeIcon((int)$mode); ?></span>
-                                <span>
-                                    <?php foreach ($modeNominators as $nominatorID => $nominatorName) {
-                                        $escapedNominatorName = safe_htmlspecialchars($nominatorName, ENT_QUOTES);
-                                        ?>
-                                        <a class="mapset-inline-user" href="/profile/<?php echo $nominatorID; ?>">
-                                            <img class="square-thumb" src="https://s.ppy.sh/a/<?php echo $nominatorID; ?>" alt="" />
-                                            <?php echo $escapedNominatorName; ?>
-                                        </a>
-                                    <?php } ?>
-                                </span>
-                            </div>
-                        <?php } ?>
-                    </div>
-                <?php } else { ?>
-                    <div class="mapset-empty-state">
-                        No nomination data is available for this set.
-                        <?php if ($loggedIn) { ?>
-                            <a href="edit/?id=<?php echo $mapset_id; ?>">Help identify the nominators</a>.
-                        <?php } ?>
-                    </div>
-                <?php } ?>
-            </div>
-        <?php } ?>
-
-        <?php if ($showEditDetails) { ?>
-            <div class="mapset-detail-card">
-                <h3 class="mapset-subsection-title">OMDB page</h3>
-                <?php if ($loggedIn) { ?>
-                    <a href="edit/?id=<?php echo $mapset_id; ?>"><i class="icon-edit"></i> Propose an edit</a>
-                <?php } ?>
-                <?php if ($contributors) { ?>
-                    <p class="mapset-contributors">
-                        <span class="subText">Contributors</span><br>
-                        <?php
-                            $contributorLinks = [];
-                            foreach ($contributors as $contributor) {
-                                $safeUsername = safe_htmlspecialchars($contributor['Username'], ENT_QUOTES);
-                                $contributorLinks[] = '<a href="/profile/' . $contributor['UserID'] . '">' . $safeUsername . '</a>';
-                            }
-                            echo implode(', ', $contributorLinks);
-                        ?>
-                    </p>
-                <?php } ?>
-            </div>
-        <?php } ?>
+        <div class="mapset-detail-card">
+            <h3 class="mapset-subsection-title">OMDB page</h3>
+            <?php if ($loggedIn) { ?>
+                <a href="edit/?id=<?php echo $mapset_id; ?>"><i class="icon-edit"></i> Propose an edit</a>
+            <?php } ?>
+            <?php if ($contributors) { ?>
+                <p class="mapset-contributors">
+                    <span class="subText">Contributors</span><br>
+                    <?php
+                        $contributorLinks = [];
+                        foreach ($contributors as $contributor) {
+                            $safeUsername = safe_htmlspecialchars($contributor['Username'], ENT_QUOTES);
+                            $contributorLinks[] = '<a href="/profile/' . $contributor['UserID'] . '">' . $safeUsername . '</a>';
+                        }
+                        echo implode(', ', $contributorLinks);
+                    ?>
+                </p>
+            <?php } ?>
+        </div>
     </div>
 </section>
 <?php } ?>
