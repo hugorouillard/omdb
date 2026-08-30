@@ -630,9 +630,9 @@ input[type="checkbox"].hamburgerToggle {
   font-size: 1em;
 }
 
-.mapset-primary-layout {
+.mapset-discussion-layout {
   display: grid;
-  grid-template-columns: minmax(28rem, 3fr) minmax(19rem, 2fr);
+  grid-template-columns: minmax(19rem, 2fr) minmax(28rem, 3fr);
   gap: 0.5em;
   align-items: start;
 }
@@ -765,23 +765,13 @@ input[type="checkbox"].hamburgerToggle {
 }
 
 .mapset-community {
-  position: sticky;
-  top: 5rem;
-  max-height: calc(100vh - 6rem);
-  padding-right: 0.25rem;
-  overflow-y: auto;
-  scrollbar-gutter: stable;
+  min-width: 0;
 }
 
 .mapset-comments,
 .mapset-latest-ratings,
 .mapset-reviews {
   min-width: 0;
-}
-
-.mapset-latest-ratings #setRatingsDisplay {
-  max-height: calc(100vh - 10rem);
-  overflow-y: auto;
 }
 
 .mapset-comment-list {
@@ -1588,29 +1578,6 @@ input[type="checkbox"]:disabled {
   font-weight: 750;
 }
 
-@media only screen and (max-width: 1250px) {
-  .mapset-primary-layout {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .mapset-community {
-    grid-row: 1;
-    position: static;
-    max-height: none;
-    padding-right: 0;
-    overflow-y: visible;
-  }
-
-  .mapset-difficulties {
-    grid-row: 2;
-  }
-
-  .mapset-latest-ratings #setRatingsDisplay {
-    max-height: 22rem;
-  }
-
-}
-
 @media only screen and (max-width: 1050px) {
   body {
     overflow-x: clip;
@@ -1656,6 +1623,10 @@ input[type="checkbox"]:disabled {
   .mapset-overview-credits::before,
   .mapset-overview-nominators::before {
     display: none;
+  }
+
+  .mapset-discussion-layout {
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .mapset-difficulty-columns {
@@ -2081,10 +2052,6 @@ input[type="checkbox"]:disabled {
 
   .mapset-difficulty-columns {
     display: none;
-  }
-
-  .mapset-latest-ratings #setRatingsDisplay {
-    max-height: 18rem;
   }
 
   .mapset-cover {

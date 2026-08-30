@@ -283,7 +283,6 @@ if (!empty($sampleRow['DateRanked']) && strtotime($sampleRow['DateRanked']) < st
 }
 ?>
 
-<div class="mapset-primary-layout">
 <section class="mapset-section mapset-difficulties" aria-labelledby="difficulties-heading">
     <h2 id="difficulties-heading" class="mapset-section-title">Difficulties</h2>
     <div class="mapset-difficulty-columns" aria-hidden="true">
@@ -674,6 +673,7 @@ while ($row = $result->fetch_assoc()) {
 </script>
 </section>
 
+<div class="mapset-discussion-layout">
 <aside class="mapset-section mapset-community" aria-labelledby="latest-ratings-heading">
     <h2 id="latest-ratings-heading" class="mapset-section-title">Latest Ratings</h2>
     <div class="mapset-latest-ratings">
@@ -684,7 +684,6 @@ while ($row = $result->fetch_assoc()) {
         </div>
     </div>
 </aside>
-</div>
 
 <section class="mapset-section mapset-discussion" aria-labelledby="discussion-heading">
     <h2 id="discussion-heading" class="mapset-section-title">Discussion</h2>
@@ -1020,6 +1019,7 @@ while ($row = $result->fetch_assoc()) {
 	    </div>
     </div>
 </section>
+</div>
 
 <script>
     const discussionTabs = document.querySelectorAll('.mapset-discussion-tabs [role="tab"]');
