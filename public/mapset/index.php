@@ -974,7 +974,6 @@ while ($row = $result->fetch_assoc()) {
             <?php } ?>
 
         </div>
-		<hr />
     </div>
     <div id="reviews-panel" class="mapset-discussion-panel" role="tabpanel" aria-labelledby="reviews-tab" hidden>
 		<?php if ($loggedIn) {
