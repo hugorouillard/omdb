@@ -857,7 +857,7 @@ while ($row = $result->fetch_assoc()) {
         <button type="button" id="reviews-tab" role="tab" aria-selected="false" aria-controls="reviews-panel" tabindex="-1">Reviews (<?php echo $reviewCount; ?>)</button>
     </div>
     <div id="comments-panel" class="mapset-discussion-panel" role="tabpanel" aria-labelledby="comments-tab">
-		<div style="max-height:50em; overflow-y:scroll;" id="commentContainer">
+        <div id="commentContainer">
 			<?php
             $stmt = $conn->prepare("SELECT *, u.IsPatron, mn.Username, u.IsPrivate FROM `comments` c LEFT JOIN mappernames mn ON c.UserID = mn.UserID LEFT JOIN users u ON u.UserID = c.UserID WHERE SetID = ? ORDER BY date ASC");
             $stmt->bind_param("s", $sampleRow["SetID"]);
