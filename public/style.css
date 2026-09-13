@@ -613,6 +613,18 @@ input[type="checkbox"].hamburgerToggle {
   scroll-snap-align: start;
 }
 
+@media only screen and (min-width: 1051px) {
+  .mapset-feature-strip.has-recommendations .feature-strip-sidebar {
+    contain: size;
+    overflow: hidden;
+  }
+
+  .mapset-feature-strip.has-recommendations .feature-strip-sidebar > div {
+    max-height: 100%;
+    overflow-y: auto;
+  }
+}
+
 .mapset-list-grid {
   display: grid;
   background: var(--main-theme-color-darker);

@@ -717,11 +717,16 @@ while ($row = $result->fetch_assoc()) {
         FROM lists l
         LEFT JOIN list_items li ON l.ListID = li.ListID
         LEFT JOIN mappernames mn ON l.UserID = mn.UserID
+        LEFT JOIN (
+            SELECT ListID, COUNT(*) AS HeartCount
+            FROM list_hearts
+            GROUP BY ListID
+        ) lh ON l.ListID = lh.ListID
         WHERE ((li.SubjectID = ? AND li.Type = 'beatmapset')
             OR (li.SubjectID IN (SELECT BeatmapID FROM beatmaps WHERE SetID = ?) AND li.Type = 'beatmap'))
             AND (l.Private = 0 OR l.UserID = ?)
         GROUP BY l.ListID HAVING COUNT(l.ListID) >= 1
-        LIMIT 10;");
+        ORDER BY COALESCE(lh.HeartCount, 0) DESC, COALESCE(l.UpdatedAt, l.CreatedAt) DESC, l.ListID DESC;");
 
     $stmt->bind_param("iii", $mapset_id, $mapset_id, $userId);
     $stmt->execute();
@@ -730,7 +735,7 @@ while ($row = $result->fetch_assoc()) {
 ?>
 
 <section class="mapset-section" aria-label="Discover">
-    <div class="feature-strip column-when-mobile-container">
+    <div class="feature-strip mapset-feature-strip column-when-mobile-container<?php echo empty($similarMaps) ? '' : ' has-recommendations'; ?>">
         <aside class="feature-strip-sidebar column-when-mobile">
             <div>
                 <h3 class="feature-strip-sidebar-title">Featured on lists</h3>
@@ -822,6 +827,7 @@ while ($row = $result->fetch_assoc()) {
                 if (xhttp.readyState === XMLHttpRequest.DONE) {
                     if (xhttp.status === 200)
                         container.innerHTML = "<br>" + xhttp.responseText;
+                    container.closest('.mapset-feature-strip').classList.toggle('has-recommendations', Boolean(container.querySelector('.map-card')));
                     container.style.opacity = 1;
                 }
             };
