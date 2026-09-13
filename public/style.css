@@ -633,6 +633,13 @@ input[type="checkbox"].hamburgerToggle {
   min-width: 0;
 }
 
+.mapset-list-card > div > a {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .mapset-empty-state {
   padding: 1rem;
   background: var(--main-theme-color);
